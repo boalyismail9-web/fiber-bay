@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تطبيق المستخدم | Fiber Bay</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .role-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand"><span>Fiber</span><span class="dot">●</span><span>Bay</span></div>
+      <a class="button ghost" href="../index.html">الرئيسية</a>
+    </header>
+
+    <div id="section-register" class="section">
+      <div class="role-header">
+        <h1 id="roleTitle" style="margin:0">التسجيل</h1>
+        <span id="roleBadge" class="badge secondary">الهوية</span>
+      </div>
+      <p class="muted">أدخل معلوماتك لإرسالها للمشرف للمراجعة.</p>
+
+      <form id="registerForm">
+        <div class="form-row">
+          <div>
+            <label>الاسم الشخصي</label>
+            <input required name="firstName" class="input" />
+          </div>
+          <div>
+            <label>الاسم العائلي</label>
+            <input required name="lastName" class="input" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label>البريد الإلكتروني</label>
+            <input required type="email" name="email" class="input" />
+          </div>
+          <div>
+            <label>رقم الهاتف</label>
+            <input required name="phone" class="input" />
+          </div>
+        </div>
+        <div id="addressRow" style="display:none">
+          <label>العنوان</label>
+          <input name="address" class="input" />
+        </div>
+        <div style="margin-top:12px">
+          <button class="button primary" type="submit">إرسال للمراجعة</button>
+        </div>
+      </form>
+      <div id="submitMsg" class="muted" style="margin-top:10px; display:none">تم إرسال بياناتك للمشرف بنجاح. سيتم إشعارك عند الموافقة.</div>
+    </div>
+
+    <div id="section-app" class="section" hidden>
+      <h2 id="appTitle">الصفحة الرئيسية</h2>
+
+      <div id="customerUI" hidden>
+        <input class="input" id="search" placeholder="ابحث عن منتج أو خدمة" />
+        <div class="list" id="marketList" style="margin-top:12px"></div>
+        <nav class="bottom-nav">
+          <a class="nav-btn active" href="#">الرئيسية</a>
+          <a class="nav-btn" href="#">المفضلة</a>
+          <a class="nav-btn" id="helpBtn" href="#help">المساعدة</a>
+          <a class="nav-btn" id="inboxBtn" href="#messages">الرسائل</a>
+          <a class="nav-btn" href="#">حسابي</a>
+        </nav>
+      </div>
+
+      <div id="sellerUI" hidden>
+        <div class="list" id="myProducts"></div>
+        <div class="fab" id="addProductFab">＋</div>
+        <nav class="bottom-nav">
+          <a class="nav-btn active" href="#">الرئيسية</a>
+          <a class="nav-btn" id="notifBtn" href="#notifications">الإشعارات</a>
+          <a class="nav-btn" id="inboxBtn2" href="#messages">الرسائل</a>
+          <a class="nav-btn" href="#">حسابي</a>
+          <a class="nav-btn" href="#">المزيد</a>
+        </nav>
+      </div>
+
+      <div id="helpSection" class="section" hidden>
+        <h3>مركز المساعدة</h3>
+        <div class="list">
+          <div class="list-item"><strong>كيف أشتري منتج؟</strong><span class="muted">ابحث ثم اختر إضافة للسلة لتواصل مع البائع.</span></div>
+          <div class="list-item"><strong>كيف أتواصل مع البائع؟</strong><span class="muted">من صفحة المنتج اضغط مراسلة.</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <button id="contactAdmin" class="button secondary">اتصل بالإدمن</button>
+        </div>
+      </div>
+
+      <div id="messagesSection" class="section" hidden>
+        <h3>الرسائل</h3>
+        <div class="form-row">
+          <input id="msgTo" class="input" placeholder="إلى (ID الإدمن)" />
+          <input id="msgBody" class="input" placeholder="نص الرسالة" />
+        </div>
+        <div style="margin-top:10px">
+          <button id="sendMsg" class="button primary">إرسال</button>
+        </div>
+        <div class="section" style="margin-top:14px">
+          <h4>الوارد</h4>
+          <div id="inbox" class="list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./firebase.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
