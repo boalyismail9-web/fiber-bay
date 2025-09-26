@@ -26,14 +26,20 @@ const firebaseConfig = {
   apiKey: "AIzaSyAESP0qiJzn8UtxdYDg5hiJr9THMnuvLC8",
   authDomain: "web-admin-57b18.firebaseapp.com",
   projectId: "web-admin-57b18",
-  storageBucket: "web-admin-57b18.firebasestorage.app", // TODO: confirm this value in Firebase Console
+  storageBucket: "web-admin-57b18.appspot.com", // Verify in Firebase Console if needed
   messagingSenderId: "302272792731",
   appId: "1:302272792731:web:5f8fc591422b3080fd9e3e",
   measurementId: "G-PHSMKH7G8N"
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let analytics = null;
+try {
+  analytics = getAnalytics(app);
+} catch (e) {
+  // Analytics may be unavailable in some environments; keep going.
+  analytics = null;
+}
 const db = getFirestore(app);
 // const auth = getAuth?.(app);
 // const storage = getStorage?.(app);

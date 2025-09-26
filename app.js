@@ -86,8 +86,31 @@
     e.preventDefault();
     const fd = new FormData(e.target);
     const payload = Object.fromEntries(fd.entries());
+    // Trim inputs
+    payload.firstName = (payload.firstName || '').trim();
+    payload.lastName = (payload.lastName || '').trim();
+    payload.email = (payload.email || '').trim();
+    payload.phone = (payload.phone || '').trim();
+    payload.address = (payload.address || '').trim();
     payload.role = role;
     payload.approved = false;
+
+    // Validation rules
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const phoneRe = /^[+\d][\d\s\-()]{6,}$/; // basic phone validation
+    const errs = [];
+    if (!payload.firstName || payload.firstName.length < 2) errs.push('الاسم الشخصي مطلوب (على الأقل حرفان)');
+    if (!payload.lastName || payload.lastName.length < 2) errs.push('الاسم العائلي مطلوب (على الأقل حرفان)');
+    if (!payload.email || !emailRe.test(payload.email)) errs.push('الرجاء إدخال بريد إلكتروني صالح');
+    if (!payload.phone || !phoneRe.test(payload.phone)) errs.push('الرجاء إدخال رقم هاتف صالح');
+    if (role === 'customer') {
+      if (!payload.address || payload.address.length < 3) errs.push('عنوان السكن مطلوب للزبون');
+    }
+
+    if (errs.length) {
+      alert('تحقق من الحقول التالية قبل الإرسال:\n\n- ' + errs.join('\n- '));
+      return; // do not send to admin/Firestore
+    }
 
     if (useFB) {
       const col = fs.collection(db, 'users');
